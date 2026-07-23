@@ -1,0 +1,15 @@
+generated: '2026-07-18'
+method: searched
+source: https://status.array.com
+status_page: https://status.array.com
+status_page_provider: Atlassian Statuspage
+notes: >-
+  Array publishes a real-time and historical system-status page hosted on
+  Atlassian Statuspage. No public versioning policy, deprecation policy, SLA,
+  or RFC 8594 Sunset/Deprecation header support could be confirmed because
+  Array's developer documentation (docs.array.com, ReadMe) is password-gated
+  and no public OpenAPI is available.
+versioning: null
+deprecation: null
+sla: null
+deprecated_operations: []

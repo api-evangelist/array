@@ -1,0 +1,36 @@
+generated: '2026-08-10'
+method: probed
+source: live response headers from https://array.io/api + https://sandbox.array.io/api
+limit_count: 0
+notes: >-
+  Array publishes no rate limits that a member of the public can read, and its API returns
+  no rate-limit signal on the wire. Every response header on the observed production and
+  sandbox responses was inspected: there is no X-RateLimit-*, no RateLimit-* (RFC 9331
+  style), no Retry-After, and no quota header of any kind. Array's own reference could
+  document limits, but docs.array.com is password-protected at every path, so nothing could
+  be read from it. This is an honest zero, not an unchecked one: an agent integrating Array
+  has no runtime signal telling it how close it is to a limit or when it may retry.
+limits: []
+headers_observed:
+  rate_limit_headers: []
+  all_array_specific_headers:
+  - access-control-expose-headers (x-array-tui-error, x-array-exp-error, x-array-efx-error)
+  - strict-transport-security
+  - cache-control / pragma / expires (no-cache, private, max-age=0)
+exhaustion_status_code: unknown
+retry_guidance: none published
+docs: https://docs.array.com/docs
+docs_status: password-gated
+x-evidence:
+- fetched: '2026-08-10'
+  url: https://array.io/api/user/v2
+  http_status: 400
+  note: full response header set inspected, no rate-limit header present
+- fetched: '2026-08-10'
+  url: https://array.io/api/report/v2
+  http_status: 400
+  note: full response header set inspected, no rate-limit header present
+- fetched: '2026-08-10'
+  url: https://sandbox.array.io/api/user/v2
+  http_status: 400
+  note: full response header set inspected, no rate-limit header present

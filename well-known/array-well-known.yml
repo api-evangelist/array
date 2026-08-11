@@ -1,0 +1,59 @@
+generated: '2026-08-10'
+method: probed
+source: live GET probes of every Array host in apis.yml
+notes: >-
+  Every /.well-known/ path was probed on all three Array hosts and none returned a
+  document. array.com and array.io answer 404 with the SvelteKit SPA shell;
+  sandbox.array.io answers 404 from the Google Cloud load balancer. No security.txt,
+  no OIDC/OAuth discovery, no api-catalog, no ai-plugin, and no A2A agent card is
+  served anywhere on Array's estate. This file records a verified absence — no
+  WellKnown or SecurityTxt pointer is emitted in apis.yml, because there is no
+  document for one to point at.
+hosts:
+- host: https://array.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://array.io
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://sandbox.array.io
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+found: 0

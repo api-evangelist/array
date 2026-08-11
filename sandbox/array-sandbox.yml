@@ -1,0 +1,68 @@
+generated: '2026-08-10'
+method: probed
+source: https://embed.array.io/cms/array-web-component.js
+docs: https://docs.array.com/docs
+notes: >-
+  Array runs a real, separately-hosted sandbox estate that mirrors production host-for-host.
+  The environment switch is public: Array's own embed loader selects the sandbox API and
+  sandbox CDN whenever the host page sets sandbox="true", runs on a hostname containing
+  "sandbox", or runs on a ".stage." hostname. Both sandbox hosts were probed live and answer.
+  Array's documentation advertises sandbox identities and sample credit reports, but that
+  reference sits on the password-protected docs.array.com, so no test identities, magic
+  values, or sample tokens were harvestable. NO TEST VALUES ARE INVENTED HERE.
+environments:
+- name: production
+  api: https://array.io
+  api_base: https://array.io/api
+  embed_cdn: https://embed.array.io
+  status: 400 on GET /api/user/v2 (route live, parameters required)
+- name: sandbox
+  api: https://sandbox.array.io
+  api_base: https://sandbox.array.io/api
+  embed_cdn: https://embed.sandbox.array.io
+  status: 400 on GET /api/user/v2 (route live, parameters required)
+- name: development
+  api: https://dev.array.io
+  embed_cdn: https://embed.dev.array.io
+  note: >-
+    Referenced by the public loader and selected when the host page's hostname contains
+    "dev.array". Array-internal; not probed and not offered to integrators.
+selection:
+  mechanism: client-attribute
+  attribute: sandbox
+  values:
+  - 'true'
+  - 'false'
+  description: >-
+    Set sandbox="true" on the Array web component (or the base component it inherits from)
+    and the loader points apiUrl at https://sandbox.array.io and the component CDN at
+    https://embed.sandbox.array.io. Hostnames containing "sandbox" or ".stage." are
+    auto-detected into sandbox mode.
+  source: https://embed.array.io/cms/array-web-component.js
+key_separation:
+  model: >-
+    Array does not use a test-vs-live key prefix convention. The same appKey attribute is
+    used in both environments; separation is by environment host, and sandbox applications
+    are issued their own appKey. Confirmed only to the extent the public loader shows —
+    the key-issuance documentation is gated.
+test_data:
+  test_identities: gated
+  sample_reports: gated
+  test_clocks: not-documented-publicly
+  triggers: not-documented-publicly
+  note: >-
+    Array's documentation index advertises sandbox identities, monitoring alert definitions
+    and sample credit reports in JSON, XML and PDF, plus a Postman collection and a raw
+    OpenAPI specification. Every one of those pages is behind the docs.array.com password
+    gate (HTTP 200 serving ReadMe's "Password Protected" form), so none were captured.
+x-evidence:
+- fetched: '2026-08-10'
+  url: https://embed.array.io/cms/array-web-component.js
+  http_status: 200
+- fetched: '2026-08-10'
+  url: https://sandbox.array.io/api/user/v2
+  http_status: 400
+- fetched: '2026-08-10'
+  url: https://docs.array.com/docs
+  http_status: 200
+  note: 200 body is ReadMe's password gate, not documentation

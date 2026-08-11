@@ -1,15 +1,72 @@
-generated: '2026-07-18'
+generated: '2026-08-10'
 method: searched
-source: https://status.array.com
+source: https://status.array.com/api/v2/summary.json
+notes: >-
+  Array publishes a real-time and historical system-status page on Atlassian Statuspage,
+  and — usefully — the standard Statuspage JSON API is open on it, so status is genuinely
+  machine-readable even though nothing else about Array's API is. Thirteen product
+  components are tracked individually. No public versioning policy, deprecation policy,
+  SLA, or RFC 8594 Sunset/Deprecation header support could be confirmed: Array's developer
+  documentation (docs.array.com, on ReadMe) is password-protected at every path and no
+  public OpenAPI exists. The one versioning fact that IS observable is the API's own path
+  shape — see versioning below, read from live routes rather than from documentation.
 status_page: https://status.array.com
 status_page_provider: Atlassian Statuspage
-notes: >-
-  Array publishes a real-time and historical system-status page hosted on
-  Atlassian Statuspage. No public versioning policy, deprecation policy, SLA,
-  or RFC 8594 Sunset/Deprecation header support could be confirmed because
-  Array's developer documentation (docs.array.com, ReadMe) is password-gated
-  and no public OpenAPI is available.
-versioning: null
-deprecation: null
-sla: null
+status_api:
+  url: https://status.array.com/api/v2/summary.json
+  format: statuspage-v2-json
+  http_status: 200
+  machine_readable: true
+  endpoints:
+  - https://status.array.com/api/v2/summary.json
+  - https://status.array.com/api/v2/status.json
+  - https://status.array.com/api/v2/components.json
+  - https://status.array.com/api/v2/incidents.json
+tracked_components:
+- My Credit Manager
+- Identity Protect
+- Privacy Protect
+- Offers Engine
+- Subscription Manager
+- BuildCredit Rent
+- Student Loan Aid
+- Debt Navigator
+- Financial Links
+- My Home Value
+- Financial Calculators
+- BuildCredit Account
+- Array +
+versioning:
+  scheme: uri-path-suffix
+  current: v2
+  observed_paths:
+  - /api/user/v2
+  - /api/report/v2
+  - /componentAnalytics/v1
+  policy_url: null
+  note: >-
+    Derived from live route probes, not from a published policy. Array versions per
+    resource (v2 on the credit resources, v1 on component analytics) rather than
+    estate-wide, and publishes no statement about how versions are introduced or retired.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: >-
+    No deprecation policy is published and no Sunset or Deprecation response header appeared
+    on any observed response from array.io or sandbox.array.io.
+sla:
+  url: null
+  uptime_target: null
+  note: No public SLA or uptime commitment is reachable without a sales conversation.
 deprecated_operations: []
+x-evidence:
+- fetched: '2026-08-10'
+  url: https://status.array.com/api/v2/summary.json
+  http_status: 200
+- fetched: '2026-08-10'
+  url: https://status.array.com/
+  http_status: 200
+- fetched: '2026-08-10'
+  url: https://docs.array.com/reference
+  http_status: 200
+  note: 200 body is ReadMe's "Password Protected" form, not a reference

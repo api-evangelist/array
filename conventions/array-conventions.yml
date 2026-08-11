@@ -1,0 +1,96 @@
+generated: '2026-08-10'
+method: probed
+source: live responses from https://array.io/api + https://embed.array.io/cms/array-web-component.js
+notes: >-
+  Derived from what Array's API actually returns to anonymous callers and from its public
+  embed loader. Array's own conventions reference is on docs.array.com, which is
+  password-protected at every path, so anything not observable without credentials is
+  recorded as unknown rather than guessed.
+authentication:
+  style: api-key
+  transport:
+  - header (x-credmo-user-token, x-credmo-client-token)
+  - query/attribute (appKey)
+  detail: authentication/array-authentication.yml
+versioning:
+  scheme: uri-path-suffix
+  detail: >-
+    The version is a trailing path segment on the resource, not a leading one:
+    /api/user/v2, /api/report/v2. Current observed version is v2. Array also runs a
+    /componentAnalytics/v1 endpoint for its embed telemetry, so versions advance per
+    resource rather than estate-wide.
+  current: v2
+  observed_paths:
+  - /api/user/v2
+  - /api/report/v2
+  - /componentAnalytics/v1
+idempotency:
+  supported: unknown
+  evidence: >-
+    No idempotency key header or parameter is visible in the public embed loader, and no
+    idempotency contract is reachable without credentials. NOT claimed either way — no
+    Idempotency pointer is emitted in apis.yml, because presence was not established.
+pagination:
+  style: unknown
+  evidence: No list operation is reachable anonymously.
+error_envelope:
+  format: custom-json
+  shape: '{"message": string, "error"?: [{value, message, param, location}]}'
+  rfc9457: false
+  detail: errors/array-problem-types.yml
+rate_limit_signaling:
+  headers_observed: []
+  detail: >-
+    No X-RateLimit-*, RateLimit-* or Retry-After header appeared on any observed response.
+    See rate-limits/array-rate-limits.yml.
+request_tracing:
+  request_id_header: none observed
+  note: >-
+    Responses carry no correlation identifier. The only Array-specific response headers
+    observed are the three bureau error headers exposed through CORS.
+custom_headers:
+  request:
+  - name: x-credmo-user-token
+    role: consumer authentication
+  - name: x-credmo-client-token
+    role: server-side authentication
+  - name: x-array-web-component
+    role: names the embedded component making the call
+  - name: x-array-web-component-referrer
+    role: page URL the component is embedded on
+  response_exposed_via_cors:
+  - x-array-tui-error
+  - x-array-exp-error
+  - x-array-efx-error
+cors:
+  enabled: true
+  evidence: >-
+    Responses carry Vary: Origin and Access-Control-Expose-Headers, and the whole product is
+    designed for browser-side embedding, so the API is called cross-origin by design.
+caching:
+  policy: no-store-by-default
+  evidence: 'Cache-Control: no-cache, private, max-age=0 with Pragma: no-cache and Expires: epoch
+    on every observed API response — appropriate for consumer credit data.'
+transport_security:
+  hsts: true
+  hsts_header: max-age=31536000; includeSubDomains; preload
+  http_versions:
+  - HTTP/2
+  - HTTP/3 (advertised via alt-svc h3)
+  detail: security/array-domain-security.yml
+cross_links:
+  authentication: authentication/array-authentication.yml
+  errors: errors/array-problem-types.yml
+  lifecycle: lifecycle/array-lifecycle.yml
+  rate_limits: rate-limits/array-rate-limits.yml
+  sandbox: sandbox/array-sandbox.yml
+x-evidence:
+- fetched: '2026-08-10'
+  url: https://array.io/api/user/v2
+  http_status: 400
+- fetched: '2026-08-10'
+  url: https://array.io/api/report/v2
+  http_status: 400
+- fetched: '2026-08-10'
+  url: https://embed.array.io/cms/array-web-component.js
+  http_status: 200

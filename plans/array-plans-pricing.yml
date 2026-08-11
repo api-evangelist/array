@@ -1,0 +1,36 @@
+generated: '2026-08-10'
+method: searched
+source: https://array.com/product-pricing/all-features
+plan_count: 0
+notes: >-
+  Array publishes no priced plans. The page it links as "Pricing" is titled "Product
+  Pricing | Pay Only For Usage | Array" and is a SvelteKit single-page app whose served
+  HTML is a 14KB shell with no pricing content in it; its SvelteKit data endpoint
+  (/product-pricing/all-features/__data.json) returns an empty payload. No tier names, no
+  prices, no currency, no billing period, no included quota and no overage rate are
+  published anywhere on array.com. Array's commercial motion is a contact-sales gate —
+  array.com/contact — and pricing is set per contract. plan_count: 0 is the finding, not
+  a gap in the pass.
+pricing_model:
+  stated: usage-based
+  evidence: 'page title: "Product Pricing | Pay Only For Usage | Array"'
+  published_rates: false
+  currency: null
+  billing_period: null
+plans: []
+sales_gate:
+  url: https://array.com/contact
+  http_status: 200
+  note: The route to commercial terms is a contact form, not a published rate card.
+x-evidence:
+- fetched: '2026-08-10'
+  url: https://array.com/product-pricing/all-features
+  http_status: 200
+  note: 200 body is a JS-rendered SPA shell with no pricing content
+- fetched: '2026-08-10'
+  url: https://array.com/product-pricing/all-features/__data.json
+  http_status: 200
+  note: SvelteKit data endpoint returns an empty payload (36 bytes)
+- fetched: '2026-08-10'
+  url: https://array.com/contact
+  http_status: 200

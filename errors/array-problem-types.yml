@@ -1,0 +1,89 @@
+generated: '2026-08-10'
+method: probed
+source: live anonymous responses from https://array.io/api
+format: custom-json
+notes: >-
+  Array publishes no OpenAPI publicly and its error reference is behind the docs.array.com
+  password gate, so this catalog was assembled from error envelopes Array actually returned
+  to anonymous probes of its production API. It is NOT the complete catalog — it is the
+  subset that could be observed without credentials. Array does not use RFC 9457
+  application/problem+json; all errors are returned as application/json with a bare
+  "message" string, and validation failures add a parallel "error" array.
+envelope:
+  content_type: application/json
+  fields:
+  - name: message
+    type: string
+    required: true
+    description: Human-readable summary of the failure. Present on every observed error.
+  - name: error
+    type: array
+    required: false
+    description: >-
+      Per-parameter validation detail. Present only on parameter-validation failures.
+    items:
+      - name: value
+        type: string
+        description: The offending value as received (empty string when the parameter was absent).
+      - name: message
+        type: string
+        description: What is wrong with this parameter.
+      - name: param
+        type: string
+        description: The parameter name.
+      - name: location
+        type: string
+        description: Where the parameter was expected. The only observed value is "query".
+  example_observed: |
+    {"message":"Not all required parameters were supplied.","error":[{"value":"","message":"Missing required parameter 'reportKey'","param":"reportKey","location":"query"},{"value":"","message":"Missing required parameter 'displayToken'","param":"displayToken","location":"query"}]}
+  rfc9457: false
+upstream_error_headers:
+  description: >-
+    Array exposes three credit-bureau error headers to browser clients via
+    Access-Control-Expose-Headers on its API responses. They carry the upstream bureau's
+    own error back to the integrator, which is a genuinely useful error-semantics signal:
+    an agent can tell an Array-side failure from a bureau-side failure.
+  headers:
+  - name: x-array-tui-error
+    bureau: TransUnion
+  - name: x-array-exp-error
+    bureau: Experian
+  - name: x-array-efx-error
+    bureau: Equifax
+  source: observed on responses from https://array.io/api/user/v2 and /api/report/v2
+problems:
+- status: 400
+  title: Bad Request
+  detail: Generic rejection returned when a required credential or parameter is absent.
+  body: '{"message":"Bad Request"}'
+  observed_on: GET https://array.io/api/user/v2
+- status: 400
+  title: Not all required parameters were supplied.
+  detail: >-
+    Parameter-validation failure. Returns the "error" array naming each missing or invalid
+    parameter, its expected location, and the value received.
+  observed_on: GET https://array.io/api/report/v2
+  parameters_named:
+  - reportKey
+  - displayToken
+- status: 404
+  title: Not Found
+  detail: Returned for any unrouted path under /api.
+  body: '{"message":"Not Found"}'
+  observed_on: GET https://array.io/api/ and GET https://array.io/api/health
+coverage:
+  complete: false
+  reason: >-
+    Only anonymous, unauthenticated responses could be observed. Authentication, authorization,
+    rate-limit and bureau-failure error shapes require credentials and are documented only on
+    the password-protected docs.array.com.
+x-evidence:
+- fetched: '2026-08-10'
+  url: https://array.io/api/report/v2
+  http_status: 400
+- fetched: '2026-08-10'
+  url: https://array.io/api/user/v2
+  http_status: 400
+- fetched: '2026-08-10'
+  url: https://array.io/api/health
+  http_status: 404

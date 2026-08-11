@@ -1,14 +1,81 @@
-generated: '2026-07-18'
-method: searched
-source: https://array.com/developers
+generated: '2026-08-10'
+method: probed
+source: https://embed.array.io/cms/array-web-component.js
 notes: >-
   Array's core offering is a suite of white-label, embeddable consumer finance
   product components ("embedded finance products") that clients integrate into
   their own web and mobile experiences. Each product below is a real published
-  product surface listed on array.com; loader/SDK integration details live in
-  Array's access-gated developer documentation (docs.array.com), so per-family
-  loader libraries were not publicly harvestable this round. Live component
-  demos are showcased at https://array.com/developers/embedded-demos.
+  product surface listed on array.com. This round CLOSED the gap the previous round
+  recorded: the loader libraries are public after all, served from Array's own CDN at
+  embed.array.io, and the component mechanics below were read directly out of them
+  rather than from the password-gated docs. Live component demos are showcased at
+  https://array.com/developers/embedded-demos.
+delivery:
+  model: custom-elements
+  description: >-
+    Array components are browser custom elements (<array-*> tags) rendered into shadow DOM.
+    The loader fetches each component's markup from the Array CDN at
+    <cdn>/cms/<tag-name>/<appKey>/1.html, attaches it to the shadow root, and hoists any
+    @font-face rules to the document head. Component-to-component messaging is done with
+    DOM events on the shadow root.
+  cdn:
+    production: https://embed.array.io
+    sandbox: https://embed.sandbox.array.io
+  html_endpoint_pattern: <cdn>/cms/<component-tag>/<appKey>/1.html
+loader_libraries:
+- name: array-web-component.js
+  url: https://embed.array.io/cms/array-web-component.js
+  http_status: 200
+  size_bytes: 22173
+  role: >-
+    Registers the array-* custom elements, resolves the API and CDN hosts per environment,
+    validates the 36-character appKey, fetches and mounts component markup, and resolves the
+    consumer userId via GET /api/user/v2.
+- name: array-pip-marketing.js
+  url: https://embed.array.io/cms/array-pip-marketing.js
+  http_status: 200
+  size_bytes: 263913
+  role: Marketing / pre-qualification (PIP) embed bundle. array.com itself loads it.
+component_attributes:
+- name: appKey
+  required: true
+  description: 36-character application UUID. Loader refuses to initialise on any other length.
+- name: apiUrl
+  required: false
+  description: Overrides the resolved API host.
+- name: sandbox
+  required: false
+  description: >-
+    Setting this to "true" switches the API host to sandbox.array.io and the CDN to
+    embed.sandbox.array.io.
+- name: userToken
+  required: false
+  description: Consumer token; sent as the x-credmo-user-token header to resolve userId.
+- name: reportKey
+  required: false
+  description: Credit-report capability token, consumed by report components.
+- name: sessionStoragePrefix
+  required: false
+  description: Namespaces the component's session-storage cache.
+observed_element_tags:
+- array-active-bureau
+- array-active-product-code
+- array-available-product-codes
+- array-credit-bureau-toggle
+- array-empty-node
+- array-event
+- array-alerts-*
+- array-order-*
+- array-report-*
+- array-scoretracker-*
+telemetry:
+  endpoint: /componentAnalytics/v1
+  headers:
+  - x-array-web-component
+  - x-array-web-component-referrer
+  note: >-
+    Every embedded component reports its name and the embedding page's full URL back to
+    Array. Worth knowing before embedding on an authenticated page.
 families:
 - name: Credit
   components:

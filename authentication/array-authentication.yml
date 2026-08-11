@@ -1,0 +1,92 @@
+generated: '2026-08-10'
+method: probed
+source: https://embed.array.io/cms/array-web-component.js
+docs: https://docs.array.com/docs
+notes: >-
+  Array publishes no OpenAPI publicly, so this profile was not derived from a spec. It was
+  read from Array's own public embed loader (embed.array.io/cms/array-web-component.js,
+  HTTP 200) and confirmed against live anonymous responses from https://array.io/api. The
+  full authentication reference lives on docs.array.com, which is password-protected at
+  every path, so scope and token-lifetime detail could not be captured.
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+  - query
+  oauth2_flows: []
+  oauth2: false
+  openid_connect: false
+  mutual_tls: false
+schemes:
+- name: appKey
+  type: apiKey
+  in: query
+  parameter: appKey
+  description: >-
+    Per-application public identifier, a 36-character UUID. Supplied as a query parameter on
+    the embed loader script tag and as an appKey attribute on every array-* web component.
+    The loader rejects any value whose length is not exactly 36. Public by design — it is
+    visible in the page source of every site that embeds an Array component.
+  evidence: >-
+    embed.array.io/cms/array-web-component.js validates appKey length === 36 before init;
+    array.com itself loads the script with ?appKey=<uuid>.
+  sources:
+  - https://embed.array.io/cms/array-web-component.js
+- name: x-credmo-user-token
+  type: apiKey
+  in: header
+  parameter: x-credmo-user-token
+  description: >-
+    Per-consumer user token, sent as a request header from the end user's device. The embed
+    loader sends it on GET https://array.io/api/user/v2 to resolve the userId for the
+    current session. Named for Credmo, the platform Array's credit stack originated from.
+  evidence: >-
+    Observed verbatim in the public loader's inferUserIdFromToken(), which issues
+    fetch('<apiUrl>/api/user/v2') with headers x-credmo-user-token,
+    x-array-web-component-referrer and x-array-web-component.
+  sources:
+  - https://embed.array.io/cms/array-web-component.js
+- name: x-credmo-client-token
+  type: apiKey
+  in: header
+  parameter: x-credmo-client-token
+  description: >-
+    Server-side client token, the counterpart to the user token, used when calls are made
+    from the customer's backend rather than the consumer's device. Array's documentation
+    states it must never be placed in website or mobile application source code.
+  evidence: >-
+    Documented by Array on docs.array.com (indexed publicly, page itself password-gated).
+    NOT independently verified against a live response — recorded from the provider's own
+    documentation text rather than a probe.
+  confidence: medium
+  sources:
+  - https://docs.array.com/docs
+- name: reportKey + displayToken
+  type: apiKey
+  in: query
+  parameter: reportKey, displayToken
+  description: >-
+    Short-lived capability tokens returned by the credit-report order call and required to
+    retrieve an assembled report. Both are mandatory query parameters on
+    GET https://array.io/api/report/v2.
+  evidence: >-
+    GET https://array.io/api/report/v2 with no parameters returns HTTP 400 naming both as
+    missing required query parameters.
+  sources:
+  - https://array.io/api/report/v2
+gaps:
+- No OAuth 2.0 or OpenID Connect surface is advertised; /.well-known/openid-configuration
+  and /.well-known/oauth-authorization-server return 404 on every Array host.
+- No published token lifetime, rotation, or revocation policy is publicly reachable.
+- No scope or permission model is publicly documented, so no scopes/ artifact is emitted.
+x-evidence:
+- fetched: '2026-08-10'
+  url: https://embed.array.io/cms/array-web-component.js
+  http_status: 200
+- fetched: '2026-08-10'
+  url: https://array.io/api/report/v2
+  http_status: 400
+- fetched: '2026-08-10'
+  url: https://array.io/.well-known/openid-configuration
+  http_status: 404

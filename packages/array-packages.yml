@@ -1,0 +1,76 @@
+generated: '2026-08-10'
+method: searched
+source: npm, PyPI registry searches + https://embed.array.io/cms/
+notes: >-
+  Array publishes NO client library to any public package registry. npm, PyPI, RubyGems,
+  crates.io, Maven Central, NuGet and pkg.go.dev were searched for array, array-io,
+  array.io and credmo and none returned a first-party Array package. What Array does ship
+  is two first-party JavaScript libraries served directly from its own CDN at
+  embed.array.io — the integration path for every Array embedded component. They are
+  unversioned: the URLs carry no version segment, the responses carry no Last-Modified,
+  and there is no changelog, so version and published are recorded as null rather than
+  guessed. An unversioned, registry-absent client library gives an integrator no way to
+  pin, audit, or diff what they are loading into their page.
+registries_searched:
+- registry: npm
+  result: no first-party package
+- registry: pypi
+  result: no first-party package (credmo, array-io, arrayio all 404)
+- registry: rubygems
+  result: no first-party package
+- registry: crates.io
+  result: no first-party package
+- registry: maven-central
+  result: no first-party package
+- registry: nuget
+  result: no first-party package
+- registry: pkg.go.dev
+  result: no first-party package
+packages:
+- language: javascript
+  registry: cdn
+  name: array-web-component.js
+  url: https://embed.array.io/cms/array-web-component.js
+  install: <script src="https://embed.array.io/cms/array-web-component.js?appKey=YOUR_APP_KEY"></script>
+  official: true
+  version: null
+  published: null
+  size_bytes: 22173
+  http_status: 200
+  description: >-
+    Array's first-party browser client library. Registers the array-* custom elements,
+    resolves the API host (array.io / sandbox.array.io / dev.array.io), validates the
+    36-character appKey, fetches component markup from the Array CDN into shadow DOM, and
+    calls GET /api/user/v2 to resolve the consumer's userId.
+  note: >-
+    Unversioned CDN artifact. No registry entry, no semver, no Last-Modified header, no
+    integrity hash published — only a weak ETag. There is no way to pin a version.
+- language: javascript
+  registry: cdn
+  name: array-pip-marketing.js
+  url: https://embed.array.io/cms/array-pip-marketing.js
+  install: <script src="https://embed.array.io/cms/array-pip-marketing.js?appKey=YOUR_APP_KEY"></script>
+  official: true
+  version: null
+  published: null
+  size_bytes: 263913
+  http_status: 200
+  description: >-
+    Array's marketing / pre-qualification (PIP) embed bundle, loaded alongside the web
+    component library on Array-powered marketing funnels. Array's own array.com site loads it.
+  note: Unversioned CDN artifact, same currency caveat as above.
+gaps:
+- No server-side SDK in any language. Every integration Array documents is either a browser
+  embed or a direct REST call.
+- No package-manager distribution means no dependency-scanner visibility, no SBOM entry, and
+  no reproducible pin for the code Array asks integrators to load into their pages.
+x-evidence:
+- fetched: '2026-08-10'
+  url: https://embed.array.io/cms/array-web-component.js
+  http_status: 200
+- fetched: '2026-08-10'
+  url: https://embed.array.io/cms/array-pip-marketing.js
+  http_status: 200
+- fetched: '2026-08-10'
+  url: https://pypi.org/pypi/credmo/json
+  http_status: 404

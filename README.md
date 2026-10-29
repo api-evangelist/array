@@ -64,6 +64,103 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Array is a company surfaced as a portfolio company of general-catalyst and added to the API Evangelist network as a stub for enrichment. Sector: fintech. This profile is a lead awaiting the enrichment pipeline.
+Array is an embedded fintech products platform that lets financial institutions, fintechs, credit-service companies, and consumer brands seamlessly integrate consumer credit, identity, and background data into their own user experiences and marketing funnels. Array packages products such as credit scores and monitoring (My Credit Manager), identity and privacy protection, background checks, credit building (BuildCredit), debt management and navigation, an offers engine, property and home-value data, and a subscription manager, delivered as embeddable white-label components, private- label experiences, and APIs so clients can drive engagement, conversion, revenue, and consumer financial progress. Headquartered in New York City and led by CEO Martin Toha, Array is backed by investors including General Catalyst. Array's production API is served from https://array.io/api with a mirrored sandbox at https://sandbox.array.io/api, and its embeddable web components load from https://embed.array.io. This profile was seeded from a VC portfolio lead and enriched from Array's public website, its live API error responses, its Statuspage API and its public embed loader; its developer documentation (docs.array.com, on ReadMe) is password-protected at every path, so the OpenAPI specification and Postman collection Array advertises there could not be harvested.
 
-Backed by: general-catalyst
+**Areas:** Company · Fintech · Embedded Finance · Credit Data · Identity · Background Checks · Credit Monitoring · Consumer Data · Financial Services
+
+## Array on APIs.io
+
+Everything profiled for Array is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/array/](https://apis.io/providers/array/)** — or go straight to one of the APIs or properties below.
+
+### APIs (1)
+
+- [Array API](https://apis.io/apis/array/array-api/) — Array's REST API for embedded consumer-credit, identity and background-data products. Confirmed live at https://array.io/api — the /api/user/v2 and…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Array Authentication](https://apis.io/security/array/array-authentication/)
+- [Array Domain Security](https://apis.io/security/array/array-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Array Plans Pricing](https://apis.io/plans/array/array-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Array Rate Limits](https://apis.io/rate-limits/array/array-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://array.com)
+- [Documentation](https://docs.array.com)
+- [Pricing](https://array.com/product-pricing/all-features)
+- [Support](https://array.com/help)
+- [Blog](https://array.com/company/newsroom)
+- [Terms of service](https://array.com/legal)
+- [Privacy policy](https://array.com/privacy)
+- [Status](https://status.array.com)
+
+## API Evangelist rating
+
+**Kin Score 25.9** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 0.0 |
+| Contract governance | 0.0 |
+| Operational transparency | 15.8 |
+| Developer ergonomics | 47.6 |
+| Access clarity | 31.6 |
+
+**Agent readiness 7.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 19.6** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/array/](https://apis.io/providers/array/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Array: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/array/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
